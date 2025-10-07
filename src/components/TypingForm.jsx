@@ -2,7 +2,7 @@ import { useState } from "react";
 import SunIcon from "./sunIcon";
 import MoonIcon from "./moonIcon";
 
-export default function TypingForm({ onSend, onToggleTheme, onDelete, theme }) {
+export default function typingForm({ onSend, onToggleTheme, onDelete, theme }) {
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {

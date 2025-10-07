@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import avatar from "../assets/avatar.png";
 import geminiAvatar from "../assets/downloads.png";
 
-export default function ChatList({ chats, isLoading }) {
+export default function chatList({ chats, isLoading }) {
   const chatRef = useRef(null);
 
   // Auto scroll
