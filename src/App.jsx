@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import ChatList from "./components/ChatList";
-import TypingForm from "./components/TypingForm";
+import ChatList from "./components/chatList.jsx";
+import TypingForm from "./components/typingForm.jsx";
 import "./style.css";
 
 const API_KEY = "AIzaSyCMdgwX8e1qtji5E_0id_V6UuejGU5TyUg"; // 🔐 Don't expose in production
