@@ -3,8 +3,9 @@ import ChatList from "./components/ChatList.jsx";
 import TypingForm from "./components/TypingForm.jsx";
 import "./style.css";
 
-const API_KEY = "AIzaSyCMdgwX8e1qtji5E_0id_V6UuejGU5TyUg"; // 🔐 Don't expose in production
-const API_URL = ` https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 function App() {
   const [chats, setChats] = useState([]);
