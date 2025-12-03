@@ -1,68 +1,107 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* ---------- Responsive fixes (add at the end of index.css) ---------- */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Make the layout fluid on small screens */
+@media (max-width: 800px) {
+  /* reduce huge header spacing and scale fonts */
+  .header {
+    margin-top: 4rem; /* was 12rem */
+    margin-bottom: 2rem; /* was 5rem */
+    padding: 0.75rem;
   }
-  a:hover {
-    color: #747bff;
+  .header .title {
+    font-size: 2rem; /* smaller headline on mobile */
+    line-height: 1.15;
   }
-  button {
-    background-color: #f9f9f9;
+  .header .subtitle {
+    font-size: 1.25rem; /* smaller subtitle */
+  }
+
+  /* make chat message containers take available width */
+  .chat-list .message.incoming .message-content,
+  .chat-list .message.outgoing .message-content {
+    width: 100%;
+    max-width: 100%;
+    gap: 0.6rem;
+    padding: 0 0.6rem;
+  }
+
+  /* allow messages to expand but not overflow screen */
+  .chat-list .message.incoming .text,
+  .chat-list .message.outgoing .text,
+  .message.error .text {
+    max-width: 100%;
+    width: auto;
+    margin: 0 0 1rem 0;
+    word-break: break-word; /* prevent overflow from long words */
+  }
+
+  /* remove large right margin for outgoing messages */
+  .chat-list .message.outgoing {
+    margin-right: 0.5rem; /* previously 5rem */
+    padding-left: 0.4rem;
+  }
+
+  /* ensure avatars & icons don't force extra width */
+  .chat-list .message .avatar,
+  .chat-list .message .icon {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+  }
+
+  /* typing area: use full width on mobile and shrink widths */
+  .typing-area {
+    padding: 0.75rem;
+    border-radius: 0;
+    bottom: 0;
+  }
+  .input-wrapper {
+    width: 100% !important; /* override fixed 50rem */
+    max-width: 100%;
+    height: 48px;
+  }
+
+  .typing-form .typing-input {
+    padding: 0.8rem 3.5rem 0.8rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .typing-area .icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* show send button properly on mobile */
+  .typing-form #send-message-button {
+    position: static;
+    transform: scale(1);
+    margin-left: 0.4rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
+
+  /* avoid overall horizontal scrolling */
+  #root,
+  .app {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 420px) {
+  .header {
+    margin-top: 3rem;
+  }
+  .header .title {
+    font-size: 1.6rem;
+  }
+  .header .subtitle {
+    font-size: 1rem;
+  }
+  .typing-form .typing-input {
+    font-size: 0.9rem;
   }
 }
