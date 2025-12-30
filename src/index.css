@@ -1,103 +1,257 @@
-/* ---------- Responsive fixes (add at the end of index.css) ---------- */
+/* ============================================
+   RESPONSIVE MOBILE & TABLET STYLES
+   ============================================ */
 
-/* Make the layout fluid on small screens */
-@media (max-width: 800px) {
-  /* reduce huge header spacing and scale fonts */
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
   .header {
-    margin-top: 4rem; /* was 12rem */
-    margin-bottom: 2rem; /* was 5rem */
-    padding: 0.75rem;
-  }
-  .header .title {
-    font-size: 2rem; /* smaller headline on mobile */
-    line-height: 1.15;
-  }
-  .header .subtitle {
-    font-size: 1.25rem; /* smaller subtitle */
+    padding: 1.5rem 1.25rem 1rem;
+    margin-bottom: 1.25rem;
   }
 
-  /* make chat message containers take available width */
+  .header .title {
+    font-size: 2rem;
+  }
+
+  .header .subtitle {
+    font-size: 1.1rem;
+  }
+
   .chat-list .message.incoming .message-content,
   .chat-list .message.outgoing .message-content {
-    width: 100%;
-    max-width: 100%;
-    gap: 0.6rem;
-    padding: 0 0.6rem;
+    max-width: 90%;
   }
 
-  /* allow messages to expand but not overflow screen */
-  .chat-list .message.incoming .text,
-  .chat-list .message.outgoing .text,
-  .message.error .text {
-    max-width: 100%;
-    width: auto;
-    margin: 0 0 1rem 0;
-    word-break: break-word; /* prevent overflow from long words */
-  }
-
-  /* remove large right margin for outgoing messages */
-  .chat-list .message.outgoing {
-    margin-right: 0.5rem; /* previously 5rem */
-    padding-left: 0.4rem;
-  }
-
-  /* ensure avatars & icons don't force extra width */
-  .chat-list .message .avatar,
-  .chat-list .message .icon {
-    width: 28px;
-    height: 28px;
-    font-size: 1rem;
-    margin-left: 0.5rem;
-  }
-
-  /* typing area: use full width on mobile and shrink widths */
-  .typing-area {
-    padding: 0.75rem;
-    border-radius: 0;
-    bottom: 0;
-  }
-  .input-wrapper {
-    width: 100% !important; /* override fixed 50rem */
-    max-width: 100%;
-    height: 48px;
-  }
-
-  .typing-form .typing-input {
-    padding: 0.8rem 3.5rem 0.8rem 1rem;
-    font-size: 0.95rem;
-  }
-
-  .typing-area .icon {
-    width: 48px;
-    height: 48px;
-  }
-
-  /* show send button properly on mobile */
-  .typing-form #send-message-button {
-    position: static;
-    transform: scale(1);
-    margin-left: 0.4rem;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-  }
-
-  /* avoid overall horizontal scrolling */
-  #root,
-  .app {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .chat-list {
+    padding: 1.25rem;
+    gap: 1rem;
   }
 }
 
-/* Extra small screens */
-@media (max-width: 420px) {
+/* Mobile devices (480px - 768px) */
+@media (max-width: 768px) {
+  body {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .app {
+    height: 100vh;
+    gap: 0;
+  }
+
   .header {
-    margin-top: 3rem;
+    padding: 1.25rem 1rem 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
   }
+
   .header .title {
-    font-size: 1.6rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
   }
+
+  .header .subtitle {
+    font-size: 1rem;
+  }
+
+  .chat-list {
+    padding: 1rem;
+    gap: 0.75rem;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .chat-list .message.incoming .message-content,
+  .chat-list .message.outgoing .message-content {
+    max-width: 95%;
+  }
+
+  .chat-list .message.incoming .text,
+  .chat-list .message.outgoing .text {
+    padding: 0.75rem 1rem;
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .chat-list .message .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .typing-area {
+    padding: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+  }
+
+  .typing-form {
+    gap: 0.4rem;
+  }
+
+  .typing-form .input-wrapper {
+    height: 44px;
+  }
+
+  .typing-form .typing-input {
+    font-size: 0.9rem;
+    padding: 0 0.875rem;
+  }
+
+  .typing-area .icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .typing-form #send-message-button {
+    width: 32px;
+    height: 32px;
+    right: 6px;
+  }
+
+  .typing-area .disclaimer-text {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+  }
+
+  .chat-list .message .icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Small mobile (420px - 480px) */
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 0.875rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .header .title {
+    font-size: 1.5rem;
+  }
+
+  .header .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .chat-list {
+    padding: 0.875rem;
+    gap: 0.6rem;
+  }
+
+  .chat-list .message.incoming .text,
+  .chat-list .message.outgoing .text {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+    border-radius: 0.875rem;
+  }
+
+  .chat-list .message .avatar {
+    width: 26px;
+    height: 26px;
+  }
+
+  .typing-area {
+    padding: 0.6rem;
+  }
+
+  .typing-form {
+    gap: 0.3rem;
+  }
+
+  .typing-form .input-wrapper {
+    height: 40px;
+    border-radius: 20px;
+  }
+
+  .typing-form .typing-input {
+    font-size: 0.85rem;
+    padding: 0 0.75rem;
+  }
+
+  .typing-area .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .typing-form #send-message-button {
+    width: 28px;
+    height: 28px;
+  }
+
+  .typing-area .disclaimer-text {
+    font-size: 0.65rem;
+    margin-top: 0.4rem;
+  }
+
+  .chat-list .message .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .action-buttons {
+    flex-wrap: wrap;
+  }
+}
+
+/* Extra small mobile (below 420px) */
+@media (max-width: 390px) {
+  .header .title {
+    font-size: 1.35rem;
+  }
+
+  .header .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .chat-list .message.incoming .message-content,
+  .chat-list .message.outgoing .message-content {
+    max-width: 100%;
+  }
+
+  .chat-list .message.incoming .text,
+  .chat-list .message.outgoing .text {
+    max-width: 100%;
+  }
+
+  .typing-form .typing-input {
+    font-size: 0.8rem;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .header {
+    display: none;
+  }
+
+  .chat-list {
+    padding: 0.75rem;
+  }
+
+  .typing-area {
+    padding: 0.5rem;
+  }
+
+  .typing-form .input-wrapper {
+    height: 40px;
+  }
+
+  .typing-area .icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Prevent zooming on input focus on iOS */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
   .header .subtitle {
     font-size: 1rem;
   }
