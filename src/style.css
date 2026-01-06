@@ -44,7 +44,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto; /* allow page scrolling so chat contents can scroll */
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -145,6 +145,21 @@ body.light_mode {
   align-items: flex-start;
   max-width: 85%;
 }
+.chat-list .message.incoming {
+  width: 100%;
+}
+.chat-list .message.incoming .message-content {
+  max-width: 720px; /* container box width */
+  margin-right: auto; /* stick to left inside the panel */
+  padding: 0.25rem 0.5rem;
+}
+.chat-list .message.incoming .text {
+  background: var(--message-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
 .chat-list .message.incoming .text {
   background: var(--message-bg);
   color: var(--text-color);
@@ -184,6 +199,22 @@ body.light_mode {
   justify-content: flex-end;
   max-width: 85%;
 }
+.chat-list .message.outgoing {
+  width: 100%;
+}
+.chat-list .message.outgoing .message-content {
+  max-width: 720px; /* container box width */
+  margin-left: auto; /* stick to right inside the panel */
+  padding: 0.25rem 0.5rem;
+}
+.chat-list .message.outgoing .text {
+  background: var(--user-message-bg);
+  color: #fff;
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.08);
+}
 .chat-list .message.outgoing .text {
   background: var(--user-message-bg);
   color: #ffffff;
@@ -222,6 +253,16 @@ body.light_mode {
   margin-top: 0.25rem;
   flex-shrink: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure avatar sits just outside the message box and does not push the box width */
+.chat-list .message .avatar {
+  margin-left: 6px;
+}
+
+.chat-list .message.outgoing .avatar {
+  margin-left: 0;
+  margin-right: 6px;
 }
 
 .chat-list .message.loading .avatar {
@@ -415,8 +456,22 @@ body.light_mode .message.outgoing .text {
   user-select: none;
 }
 
-/* App container */
+/* App container - center the chat panel like ChatGPT */
 .app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* full viewport height */
+  max-width: 920px; /* constrain width for large screens */
+  margin: 0 auto; /* center horizontally */
+  gap: 0;
+  border-radius: 12px;
+  background: transparent;
+  overflow: hidden; /* keep typing area sticky and allow chat-list internal scroll */
+  padding: 0;
+}
+
+/* Make the chat list act as the scrollable panel inside the centered app */
+.chat-panel {
   display: flex;
   flex-direction: column;
   height: 100%;
