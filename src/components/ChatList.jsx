@@ -12,29 +12,34 @@ export default function chatList({ chats, isLoading }) {
     }
   }, [chats, isLoading]);
 
+  console.log("ChatList rendered with chats:", chats); // Debug log
+
   return (
     <div className="chat-list" ref={chatRef}>
-      {chats.map((chat, index) => (
-        <div
-          key={index}
-          className={`message ${
-            chat.type === "user"
-              ? "outgoing"
-              : chat.type === "ai"
-              ? "incoming"
-              : "error"
-          }`}
-        >
-          <div className="message-content">
-            <img
-              className="avatar"
-              src={chat.type === "user" ? avatar : geminiAvatar}
-              alt={chat.type === "user" ? "User avatar" : "Gemini avatar"}
-            />
-            <p className="text">{chat.text}</p>
+      {chats.map((chat, index) => {
+        console.log(`Rendering chat ${index}:`, chat); // Debug each chat
+        return (
+          <div
+            key={index}
+            className={`message ${
+              chat.type === "user"
+                ? "outgoing"
+                : chat.type === "ai"
+                ? "incoming"
+                : "error"
+            }`}
+          >
+            <div className="message-content">
+              <img
+                className="avatar"
+                src={chat.type === "user" ? avatar : geminiAvatar}
+                alt={chat.type === "user" ? "User avatar" : "Gemini avatar"}
+              />
+              <p className="text">{chat.text}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {isLoading && (
         <div className="message incoming loading">

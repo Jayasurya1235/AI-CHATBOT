@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import ChatList from "./components/ChatList.jsx";
 import TypingForm from "./components/TypingForm.jsx";
+import { handleStreamingResponse } from "./utils/parseStreamResponse.js";
 import "./style.css";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+const API_URL = `https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-2.5-flash-lite:streamGenerateContent?key=${API_KEY}`;
 
 function App() {
   const [chats, setChats] = useState([]);
   const [theme, setTheme] = useState("dark_mode");
   const [isLoading, setIsLoading] = useState(false);
+  console.log("chats:", chats);
 
   // Load saved chats and theme
   useEffect(() => {
@@ -40,9 +42,14 @@ function App() {
     }
   };
 
-  const sendToGemini = async (userMessage) => {
+  const sendToGemini = async (userMessage, retryCount = 0) => {
     setIsLoading(true);
-    setChats((prev) => [...prev, { type: "user", text: userMessage }]);
+
+    // Only add the user message to the chat on the first attempt
+    if (retryCount === 0) {
+      setChats((prev) => [...prev, { type: "user", text: userMessage }]);
+    }
+
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -51,15 +58,46 @@ function App() {
           contents: [{ role: "user", parts: [{ text: userMessage }] }],
         }),
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error.message);
 
-      const apiResponse = data?.candidates[0].content.parts[0].text.replace(
-        /\*\*(.*?)\*\*/g,
-        "$1"
-      );
-      setChats((prev) => [...prev, { type: "ai", text: apiResponse }]);
+      // HANDLE 429 ERROR (Rate Limit)
+      if (response.status === 429 && retryCount < 3) {
+        const waitTime = Math.pow(2, retryCount) * 2000; // Wait 2s, 4s, 8s
+        console.warn(`Rate limit hit. Retrying in ${waitTime}ms...`);
+
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        return sendToGemini(userMessage, retryCount + 1); // Recursive retry
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error?.message || "Something went wrong");
+      }
+
+      // Handle streaming response - pass the entire response object
+      const apiResponse = await handleStreamingResponse(response);
+      
+      console.log("API Response received:", {
+        length: apiResponse.length,
+        empty: apiResponse.trim() === "",
+        value: apiResponse
+      });
+      
+      if (!apiResponse || apiResponse.trim() === "") {
+        throw new Error("Empty response from AI. Please try again.");
+      }
+      
+      const cleanedResponse = apiResponse.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+      
+      console.log("Setting chat with cleaned response:", cleanedResponse);
+      
+      setChats((prev) => {
+        const updated = [...prev, { type: "ai", text: cleanedResponse }];
+        console.log("State updated with chats:", updated);
+        return updated;
+      });
+
     } catch (error) {
+      // Only show the error if we've exhausted retries or it's a different error
       setChats((prev) => [...prev, { type: "error", text: error.message }]);
     } finally {
       setIsLoading(false);
