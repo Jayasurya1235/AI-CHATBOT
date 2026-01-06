@@ -13,7 +13,6 @@ function App() {
   const [theme, setTheme] = useState("dark_mode");
   const [isLoading, setIsLoading] = useState(false);
   console.log("chats:", chats);
-
   // Load saved chats and theme
   useEffect(() => {
     const savedChats = localStorage.getItem("saved-chats");
@@ -22,26 +21,22 @@ function App() {
     setTheme(savedTheme);
     document.body.classList.toggle("light_mode", savedTheme === "light_mode");
   }, []);
-
   // Save chats to localStorage
   useEffect(() => {
     localStorage.setItem("saved-chats", JSON.stringify(chats));
   }, [chats]);
-
   const toggleTheme = () => {
     const newTheme = theme === "light_mode" ? "dark_mode" : "light_mode";
     setTheme(newTheme);
     localStorage.setItem("themeColor", newTheme);
     document.body.classList.toggle("light_mode", newTheme === "light_mode");
   };
-
   const deleteChats = () => {
     if (confirm("Are you sure you want to delete all the chats?")) {
       setChats([]);
       localStorage.removeItem("saved-chats");
     }
   };
-
   const sendToGemini = async (userMessage, retryCount = 0) => {
     setIsLoading(true);
 
@@ -49,7 +44,6 @@ function App() {
     if (retryCount === 0) {
       setChats((prev) => [...prev, { type: "user", text: userMessage }]);
     }
-
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -58,7 +52,6 @@ function App() {
           contents: [{ role: "user", parts: [{ text: userMessage }] }],
         }),
       });
-
       // HANDLE 429 ERROR (Rate Limit)
       if (response.status === 429 && retryCount < 3) {
         const waitTime = Math.pow(2, retryCount) * 2000; // Wait 2s, 4s, 8s
@@ -67,12 +60,10 @@ function App() {
         await new Promise(resolve => setTimeout(resolve, waitTime));
         return sendToGemini(userMessage, retryCount + 1); // Recursive retry
       }
-
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.error?.message || "Something went wrong");
       }
-
       // Handle streaming response - pass the entire response object
       const apiResponse = await handleStreamingResponse(response);
       

@@ -3,7 +3,6 @@
    ============================================ */
 
 /* Tablets (768px - 1024px) */
-@media (max-width: 1024px) {
   .header {
     padding: 1.5rem 1.25rem 1rem;
     margin-bottom: 1.25rem;
@@ -17,16 +16,26 @@
     font-size: 1.1rem;
   }
 
-  .chat-list .message.incoming .message-content,
-  .chat-list .message.outgoing .message-content {
-    max-width: 90%;
+.chat-list .message.incoming .message-content {
+    width:100%;
+    display: flex;
+    justify-content: start;
   }
 
+.chat-list .message.outgoing .message-content {
+ display: flex;
+ justify-content: end;
+ padding: 0%;
+  }
+.chat-list .message.outgoing{
+  display: flex;
+  justify-content: end;
+}
   .chat-list {
     padding: 1.25rem;
     gap: 1rem;
   }
-}
+
 
 /* Mobile devices (480px - 768px) */
 @media (max-width: 768px) {
@@ -258,4 +267,4 @@
   .typing-form .typing-input {
     font-size: 0.9rem;
   }
-}
+

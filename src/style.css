@@ -138,42 +138,34 @@ body.light_mode {
   }
 }
 
+.chat-list .message.incoming {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
 .chat-list .message.incoming .message-content {
   display: flex;
   gap: 0.75rem;
-  width: 100%;
+  max-width: 720px;
+  margin-right: auto;
   align-items: flex-start;
-  max-width: 85%;
-}
-.chat-list .message.incoming {
-  width: 100%;
-}
-.chat-list .message.incoming .message-content {
-  max-width: 720px; /* container box width */
-  margin-right: auto; /* stick to left inside the panel */
   padding: 0.25rem 0.5rem;
 }
 .chat-list .message.incoming .text {
   background: var(--message-bg);
+  color: var(--text-color);
   border: 1px solid var(--border-color);
   padding: 0.9rem 1rem;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-.chat-list .message.incoming .text {
-  background: var(--message-bg);
-  color: var(--text-color);
-  padding: 0.875rem 1.125rem;
-  border-radius: 1.125rem;
   max-width: 100%;
-  margin-bottom: 0.5rem;
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 .chat-list .message.outgoing {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   animation: slideInRight 0.3s ease-out;
@@ -189,42 +181,26 @@ body.light_mode {
     transform: translateX(0);
   }
 }
-
 .chat-list .message.outgoing .message-content {
   display: flex;
   flex-direction: row-reverse;
   gap: 0.75rem;
-  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
   align-items: flex-start;
-  justify-content: flex-end;
-  max-width: 85%;
-}
-.chat-list .message.outgoing {
-  width: 100%;
-}
-.chat-list .message.outgoing .message-content {
-  max-width: 720px; /* container box width */
-  margin-left: auto; /* stick to right inside the panel */
   padding: 0.25rem 0.5rem;
 }
 .chat-list .message.outgoing .text {
   background: var(--user-message-bg);
-  color: #fff;
+  color: #ffffff;
   border: 1px solid rgba(124, 58, 237, 0.12);
   padding: 0.9rem 1rem;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.08);
-}
-.chat-list .message.outgoing .text {
-  background: var(--user-message-bg);
-  color: #ffffff;
-  padding: 0.875rem 1.125rem;
-  border-radius: 1.125rem;
   max-width: 100%;
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.5;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.08);
 }
 .chat-list .message.outgoing .icon {
   display: none;
